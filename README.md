@@ -4,7 +4,7 @@ This is an interactive English vocabulary test will help you to help improve Eng
 
 ## Installation
 
-To install the project, you'll first need to clone the repository:
+To install and run the project locally, follow these steps:
 
 ```bash
 # Clone the repository
