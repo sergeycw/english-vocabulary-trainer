@@ -1,3 +1,4 @@
+import "./styles/main.css";
 import { TrainingController } from "./controllers";
 import { TrainingModel } from "./models";
 import { AssembledWordView, TrainingInfoView } from "./views";
