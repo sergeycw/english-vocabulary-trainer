@@ -1,5 +1,6 @@
 export interface IAssembledWordView {
   renderWord(): void;
+  renderOriginWord(word: string): void;
 }
 
 export class AssembledWordView implements IAssembledWordView {
@@ -32,6 +33,17 @@ export class AssembledWordView implements IAssembledWordView {
     container.innerHTML = "";
     this.word.forEach((letter) => {
       const button = this.createButton(letter);
+      container.appendChild(button);
+    });
+  }
+
+  public renderOriginWord(word: string) {
+    const container = this.getContainer();
+    container.innerHTML = "";
+    const wordToRender = word.split("");
+    wordToRender.forEach((letter) => {
+      const button = this.createButton(letter);
+      button.className = "btn btn-danger";
       container.appendChild(button);
     });
   }

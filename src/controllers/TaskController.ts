@@ -5,10 +5,13 @@ import { EVENTS } from "../constants";
 import { Statistics } from "../types";
 
 const MAX_ERRORS = 3;
+const TIMEOUT = 2000;
 
 export interface ITaskController extends IEventEmitter {
   handleLetterSelection(letter: string, index: number): void;
+
   getStatisticByWord(): Statistics;
+
   cleanupEmitterEvents(): void;
 }
 
@@ -19,17 +22,17 @@ export class TaskController extends EventEmitter implements ITaskController {
   private cleanupListeners: () => void;
 
   constructor(
-      word: string,
-      shuffledWordView: IShuffledWordView,
-      assembledWordView: IAssembledWordView,
-      taskModel: ITaskModel,
+    word: string,
+    shuffledWordView: IShuffledWordView,
+    assembledWordView: IAssembledWordView,
+    taskModel: ITaskModel,
   ) {
     super();
     this.taskModel = taskModel;
     this.shuffledWordView = shuffledWordView;
     this.assembledWordView = assembledWordView;
     this.cleanupListeners = this.shuffledWordView.renderButtons(
-        this.handleLetterSelection.bind(this),
+      this.handleLetterSelection.bind(this),
     );
     this.assembledWordView.renderWord();
   }
@@ -39,12 +42,14 @@ export class TaskController extends EventEmitter implements ITaskController {
       this.assembledWordView.renderWord();
       this.cleanupListeners();
       this.cleanupListeners = this.shuffledWordView.renderButtons(
-          this.handleLetterSelection.bind(this),
+        this.handleLetterSelection.bind(this),
       );
 
       if (this.taskModel.isWordComplete()) {
-        this.emit(EVENTS.TASK_COMPLETE);
         this.cleanupListeners();
+        setTimeout(() => {
+          this.emit(EVENTS.TASK_COMPLETE);
+        }, TIMEOUT);
       }
     } else {
       this.handleWrongLetterSelection(index);
@@ -58,8 +63,12 @@ export class TaskController extends EventEmitter implements ITaskController {
     }
 
     if (this.taskModel.getErrorsCount() >= MAX_ERRORS) {
-      this.emit(EVENTS.TASK_FAILED);
+      const originWord = this.taskModel.getOriginWord();
+      this.assembledWordView.renderOriginWord(originWord);
       this.cleanupListeners();
+      setTimeout(() => {
+        this.emit(EVENTS.TASK_FAILED);
+      }, TIMEOUT);
     }
   }
 
