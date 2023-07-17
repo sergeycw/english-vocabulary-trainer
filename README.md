@@ -1,6 +1,6 @@
 # English Vocabulary Test
 
-This is an interactive English vocabulary test will help you to help improve English language skills
+This interactive English vocabulary test will help you to improve language skills
 
 ## Installation
 
@@ -8,7 +8,7 @@ To install and run the project locally, follow these steps:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/english-vocabulary-test.git
+git clone git@github.com:sergeycw/english_vocabulary_trainer.git
 
 # Navigate to the project directory
 cd english-vocabulary-test
