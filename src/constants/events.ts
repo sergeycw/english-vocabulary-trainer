@@ -1,0 +1,4 @@
+export const EVENTS = {
+  TASK_COMPLETE: "TASK_COMPLETE",
+  TASK_FAILED: "TASK_FAILED",
+};
